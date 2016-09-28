@@ -270,9 +270,9 @@ public class BrowserController extends WindowController
         if(preferences.getBoolean("browser.transcript.open")) {
             this.logDrawer.open();
         }
-        if(LicenseFactory.find().equals(LicenseFactory.EMPTY_LICENSE)) {
+        /*if(LicenseFactory.find().equals(LicenseFactory.EMPTY_LICENSE)) {
             this.addDonateWindowTitle();
-        }
+        }*/
         this.selectBookmarks(BookmarkSwitchSegement.bookmarks);
     }
 
@@ -575,7 +575,8 @@ public class BrowserController extends WindowController
         // Save frame rectangle
         window.setFrameAutosaveName("Browser");
         window.setTitle(preferences.getProperty("application.name"));
-        window.setMiniwindowImage(IconCacheFactory.<NSImage>get().iconNamed("cyberduck-document.icns"));
+        //window.setMiniwindowImage(IconCacheFactory.<NSImage>get().iconNamed("cyberduck-document.icns"));
+        window.setMiniwindowImage(IconCacheFactory.<NSImage>get().iconNamed("cloud.icns"));
         window.setMovableByWindowBackground(true);
         window.setCollectionBehavior(window.collectionBehavior() | NSWindow.NSWindowCollectionBehavior.NSWindowCollectionBehaviorFullScreenPrimary);
         window.setContentMinSize(new NSSize(600d, 200d));
@@ -677,7 +678,7 @@ public class BrowserController extends WindowController
     private NSTitlebarAccessoryViewController accessoryView;
 
     public void setDonateButton(NSButton button) {
-        if(!Factory.Platform.osversion.matches("10\\.(7|8|9).*")) {
+        /*if(!Factory.Platform.osversion.matches("10\\.(7|8|9).*")) {
             button.setTitle(LocaleFactory.localizedString("Get a donation key!", "License"));
             button.setAction(Foundation.selector("donateMenuClicked:"));
             button.sizeToFit();
@@ -687,13 +688,13 @@ public class BrowserController extends WindowController
             accessoryView = NSTitlebarAccessoryViewController.create();
             accessoryView.setLayoutAttribute(NSTitlebarAccessoryViewController.NSLayoutAttributeRight);
             accessoryView.setView(view);
-        }
+        }*/
     }
 
     private void addDonateWindowTitle() {
-        if(!Factory.Platform.osversion.matches("10\\.(7|8|9).*")) {
+        /*if(!Factory.Platform.osversion.matches("10\\.(7|8|9).*")) {
             window.addTitlebarAccessoryViewController(accessoryView);
-        }
+        }*/
     }
 
     public void removeDonateWindowTitle() {
@@ -3307,7 +3308,7 @@ public class BrowserController extends WindowController
                                     // Close bookmarks
                                     selectBrowser(BrowserSwitchSegement.byPosition(preferences.getInteger("browser.view")));
                                     // Set the window title
-                                    window.setRepresentedFilename(HistoryCollection.defaultCollection().getFile(host).getAbsolute());
+                                    //window.setRepresentedFilename(HistoryCollection.defaultCollection().getFile(host).getAbsolute());
                                     if(preferences.getBoolean("browser.disconnect.confirm")) {
                                         window.setDocumentEdited(true);
                                     }

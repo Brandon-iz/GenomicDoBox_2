@@ -27,8 +27,6 @@ import ch.cyberduck.core.exception.BackgroundException;
 import ch.cyberduck.core.exception.NotfoundException;
 import ch.cyberduck.core.io.Checksum;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.irods.jargon.core.exception.JargonException;
@@ -66,7 +64,7 @@ public class IRODSListService implements ListService {
                 attributes.setModificationDate(stats.getModifiedAt().getTime());
                 attributes.setCreationDate(stats.getCreatedAt().getTime());
                 attributes.setSize(stats.getObjSize());
-                attributes.setChecksum(Checksum.parse(Hex.encodeHexString(Base64.decodeBase64(stats.getChecksum()))));
+                attributes.setChecksum(Checksum.parse(stats.getChecksum()));
                 attributes.setOwner(stats.getOwnerName());
                 attributes.setGroup(stats.getOwnerZone());
                 children.add(new Path(directory, PathNormalizer.name(normalized),

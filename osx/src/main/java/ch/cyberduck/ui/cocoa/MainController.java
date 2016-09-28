@@ -1033,7 +1033,7 @@ public class MainController extends BundleController implements NSApplication.De
         this.background(new AbstractBackgroundAction<Void>() {
             @Override
             public Void run() throws BackgroundException {
-                bonjour.init();
+                //bonjour.init();
                 return null;
             }
         });
@@ -1214,13 +1214,15 @@ public class MainController extends BundleController implements NSApplication.De
                         // Review if at least one window requested to terminate later, we shall wait.
                         // This will iterate over all mounted browsers.
                         if(NSApplication.NSTerminateNow.equals(BrowserController.applicationShouldTerminate(app))) {
-                            return this.applicationShouldTerminateAfterDonationPrompt(app);
+                            //return this.applicationShouldTerminateAfterDonationPrompt(app);
+                            return BrowserController.applicationShouldTerminate(app);
                         }
                         return NSApplication.NSTerminateLater;
                     }
                     if(choice == SheetCallback.DEFAULT_OPTION) {
                         // Quit immediatly
-                        return this.applicationShouldTerminateAfterDonationPrompt(app);
+                        //return this.applicationShouldTerminateAfterDonationPrompt(app);
+                        return BrowserController.applicationShouldTerminate(app);
                     }
                 }
                 else {
@@ -1228,7 +1230,8 @@ public class MainController extends BundleController implements NSApplication.De
                 }
             }
         }
-        return this.applicationShouldTerminateAfterDonationPrompt(app);
+        //return this.applicationShouldTerminateAfterDonationPrompt(app);
+        return BrowserController.applicationShouldTerminate(app);
     }
 
     public NSUInteger applicationShouldTerminateAfterDonationPrompt(final NSApplication app) {

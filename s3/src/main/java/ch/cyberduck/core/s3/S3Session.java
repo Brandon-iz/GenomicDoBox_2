@@ -306,6 +306,7 @@ public class S3Session extends HttpSession<RequestEntityRestStorageService> {
             return (T) new S3TouchFeature(this);
         }
         if(type == Location.class) {
+            // Only for AWS
             if(this.isConnected()) {
                 return (T) new S3LocationFeature(this, client.getRegionEndpointCache());
             }
@@ -331,10 +332,18 @@ public class S3Session extends HttpSession<RequestEntityRestStorageService> {
             return null;
         }
         if(type == Logging.class) {
-            return (T) new S3LoggingFeature(this);
+            // Only for AWS
+            if(host.getHostname().endsWith(preferences.getProperty("s3.hostname.default"))) {
+                return (T) new S3LoggingFeature(this);
+            }
+            return null;
         }
         if(type == Lifecycle.class) {
-            return (T) new S3LifecycleConfiguration(this);
+            // Only for AWS
+            if(host.getHostname().endsWith(preferences.getProperty("s3.hostname.default"))) {
+                return (T) new S3LifecycleConfiguration(this);
+            }
+            return null;
         }
         if(type == Encryption.class) {
             // Only for AWS
@@ -344,7 +353,11 @@ public class S3Session extends HttpSession<RequestEntityRestStorageService> {
             return null;
         }
         if(type == Redundancy.class) {
-            return (T) new S3StorageClassFeature(this);
+            // Only for AWS
+            if(host.getHostname().endsWith(preferences.getProperty("s3.hostname.default"))) {
+                return (T) new S3StorageClassFeature(this);
+            }
+            return null;
         }
         if(type == IdentityConfiguration.class) {
             // Only for AWS

@@ -117,6 +117,7 @@ public class ConnectionController extends SheetController {
 
     @Outlet
     private NSPopUpButton protocolPopup;
+    private Protocol swiftProtocol;
 
     public void setProtocolPopup(NSPopUpButton protocolPopup) {
         this.protocolPopup = protocolPopup;
@@ -130,18 +131,22 @@ public class ConnectionController extends SheetController {
             final NSMenuItem item = this.protocolPopup.itemWithTitle(title);
             item.setRepresentedObject(String.valueOf(protocol.hashCode()));
             item.setImage(IconCacheFactory.<NSImage>get().iconNamed(protocol.icon(), 16));
+            if(title.contains("Swift")){
+                swiftProtocol = protocol;
+            }
         }
         final Protocol defaultProtocol
                 = ProtocolFactory.forName(preferences.getProperty("connection.protocol.default"));
         this.protocolPopup.selectItemAtIndex(
-                protocolPopup.indexOfItemWithRepresentedObject(String.valueOf(defaultProtocol.hashCode()))
+                protocolPopup.indexOfItemWithRepresentedObject(String.valueOf(swiftProtocol.hashCode()))
         );
     }
 
     public void protocolSelectionDidChange(final NSPopUpButton sender) {
         log.debug("protocolSelectionDidChange:" + sender);
         final Protocol protocol = ProtocolFactory.forName(protocolPopup.selectedItem().representedObject());
-        portField.setIntValue(protocol.getDefaultPort());
+        //portField.setIntValue(protocol.getDefaultPort());
+        portField.setIntValue(5000);
         portField.setEnabled(protocol.isPortConfigurable());
         if(!protocol.isHostnameConfigurable()) {
             hostField.setStringValue(protocol.getDefaultHostname());

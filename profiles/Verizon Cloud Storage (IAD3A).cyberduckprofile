@@ -12,7 +12,5 @@
         <string>storage-iad3a.cloud.verizon.com</string>
         <key>Hostname Configurable</key>
         <false/>
-        <key>Authorization</key>
-       	<string>AWS2</string>
     </dict>
 </plist>

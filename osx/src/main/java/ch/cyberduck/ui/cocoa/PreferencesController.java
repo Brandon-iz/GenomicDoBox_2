@@ -537,7 +537,7 @@ public class PreferencesController extends ToolbarWindowController {
                 @Override
                 public void run() {
                     defaultBookmarkCombobox.addItemWithTitle(BookmarkNameProvider.toString(bookmark));
-                    defaultBookmarkCombobox.lastItem().setImage(IconCacheFactory.<NSImage>get().iconNamed("cyberduck-document.icns", 16));
+                    defaultBookmarkCombobox.lastItem().setImage(IconCacheFactory.<NSImage>get().iconNamed("cloud.icns", 16));
                     defaultBookmarkCombobox.lastItem().setRepresentedObject(bookmark.getUuid());
                 }
             });

@@ -154,7 +154,8 @@ public class UserDefaultsPreferences extends Preferences {
         final NSBundle bundle = this.bundle;
         if(null != bundle) {
             if(bundle.objectForInfoDictionaryKey("CFBundleName") != null) {
-                defaults.put("application.name", bundle.objectForInfoDictionaryKey("CFBundleName").toString());
+                defaults.put("application.name", "Genomic DoBox");
+                //defaults.put("application.name", bundle.objectForInfoDictionaryKey("CFBundleName").toString());
             }
             if(bundle.objectForInfoDictionaryKey("NSHumanReadableCopyright") != null) {
                 defaults.put("application.copyright", bundle.objectForInfoDictionaryKey("NSHumanReadableCopyright").toString());

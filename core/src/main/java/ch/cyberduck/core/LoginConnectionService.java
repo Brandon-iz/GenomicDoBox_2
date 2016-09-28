@@ -195,7 +195,7 @@ public class LoginConnectionService implements ConnectionService {
                 bookmark.getProtocol().getName()));
 
         // New connection opened
-        notification.notify("Connection opened", bookmark.getHostname());
+        //notification.notify("Connection opened", bookmark.getHostname());
 
         // Update last accessed timestamp
         bookmark.setTimestamp(new Date());

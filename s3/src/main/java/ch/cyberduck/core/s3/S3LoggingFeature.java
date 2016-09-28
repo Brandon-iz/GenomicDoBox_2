@@ -52,8 +52,12 @@ public class S3LoggingFeature implements Logging {
             try {
                 throw new S3ExceptionMappingService().map("Cannot read bucket logging status", e);
             }
-            catch(AccessDeniedException | InteroperabilityException l) {
+            catch(AccessDeniedException l) {
                 log.warn(String.format("Missing permission to read logging configuration for %s %s", container, e.getMessage()));
+                return LoggingConfiguration.empty();
+            }
+            catch(InteroperabilityException i) {
+                log.warn(String.format("Not supported to read logging configuration for %s %s", container, e.getMessage()));
                 return LoggingConfiguration.empty();
             }
         }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00F127691D75F31300276A84 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00F127681D75F31300276A84 /* Images.xcassets */; };
+		00F1276B1D75F33500276A84 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00F1276A1D75F33500276A84 /* Images-2.xcassets */; };
 		470168310EED9EA8005E2CCF /* Archive.strings in Resources */ = {isa = PBXBuildFile; fileRef = 470168130EED9EA7005E2CCF /* Archive.strings */; };
 		470168500EED9EB7005E2CCF /* Mosso.strings in Resources */ = {isa = PBXBuildFile; fileRef = 470168320EED9EB7005E2CCF /* Mosso.strings */; };
 		47022C231018663600488C19 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47022C221018663600488C19 /* CoreServices.framework */; };
@@ -243,7 +245,6 @@
 		47F85C3C1C0F103E00FDA856 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F85C2A1C0F103E00FDA856 /* main.m */; };
 		47F85C401C0F103E00FDA856 /* SNDisclosableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 47F85C2E1C0F103E00FDA856 /* SNDisclosableView.h */; };
 		47F85C411C0F103E00FDA856 /* SNDisclosableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F85C2F1C0F103E00FDA856 /* SNDisclosableView.m */; };
-		47F9380F1D7F63CE00108AB5 /* dropbox.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 47F9380E1D7F63CE00108AB5 /* dropbox.tiff */; };
 		47FB79D81C2E9E67008D3B9C /* launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 47FB79D51C2E9E67008D3B9C /* launcher.h */; };
 		47FB79D91C2E9E67008D3B9C /* launcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB79D61C2E9E67008D3B9C /* launcher.m */; };
 		47FB79DA1C2E9E67008D3B9C /* launcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB79D61C2E9E67008D3B9C /* launcher.m */; };
@@ -307,6 +308,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00F127681D75F31300276A84 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = app/Images.xcassets; sourceTree = "<group>"; };
+		00F1276A1D75F33500276A84 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Images-2.xcassets"; path = "app/Images-2.xcassets"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		470168150EED9EA8005E2CCF /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = i18n/src/main/resources/zh_CN.lproj/Archive.strings; sourceTree = "<group>"; };
@@ -1539,7 +1542,6 @@
 		47F85C2A1C0F103E00FDA856 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = osx/src/main/objc/main.m; sourceTree = "<group>"; };
 		47F85C2E1C0F103E00FDA856 /* SNDisclosableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNDisclosableView.h; path = osx/src/main/objc/SNDisclosableView.h; sourceTree = "<group>"; };
 		47F85C2F1C0F103E00FDA856 /* SNDisclosableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNDisclosableView.m; path = osx/src/main/objc/SNDisclosableView.m; sourceTree = "<group>"; };
-		47F9380E1D7F63CE00108AB5 /* dropbox.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = dropbox.tiff; sourceTree = "<group>"; };
 		47FB79D51C2E9E67008D3B9C /* launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = launcher.h; path = cli/osx/src/main/objc/launcher.h; sourceTree = "<group>"; };
 		47FB79D61C2E9E67008D3B9C /* launcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = launcher.m; path = cli/osx/src/main/objc/launcher.m; sourceTree = "<group>"; };
 		47FB79D71C2E9E67008D3B9C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = cli/osx/src/main/objc/main.m; sourceTree = "<group>"; };
@@ -1738,6 +1740,8 @@
 		4741639206C4F58D00AC0BD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				00F1276A1D75F33500276A84 /* Images-2.xcassets */,
+				00F127681D75F31300276A84 /* Images.xcassets */,
 				47A082B0167A169D004458C7 /* cyberduck-application.icns */,
 				471DF14F167F2A7B00EAFE71 /* cyberduck-document.icns */,
 				47BCF18D13BB4EC700D26E4C /* setup/app/container-migration.plist */,
@@ -1801,7 +1805,6 @@
 				47B3318B16680FF100C9FFA0 /* ftp.tiff */,
 				47B331911668102400C9FFA0 /* s3.tiff */,
 				47B331921668102400C9FFA0 /* swift.tiff */,
-				47F9380E1D7F63CE00108AB5 /* dropbox.tiff */,
 				4767306716108E1200B28D35 /* add.tiff */,
 				4767306816108E1200B28D35 /* addPressed.tiff */,
 				4767306916108E1200B28D35 /* advanced.tiff */,
@@ -2199,6 +2202,7 @@
 				476730C616108E1300B28D35 /* nav-up.tiff in Resources */,
 				476730C816108E1300B28D35 /* bandwidth.tiff in Resources */,
 				476730C916108E1300B28D35 /* book.tiff in Resources */,
+				00F127691D75F31300276A84 /* Images.xcassets in Resources */,
 				476730CA16108E1300B28D35 /* bookmark.tiff in Resources */,
 				476730CB16108E1300B28D35 /* bookmarks.tiff in Resources */,
 				476730CC16108E1300B28D35 /* browser.tiff in Resources */,
@@ -2221,6 +2225,7 @@
 				476730DF16108E1300B28D35 /* general.tiff in Resources */,
 				476730E116108E1300B28D35 /* history.tiff in Resources */,
 				474960771CD75C9700B020C9 /* open.pdf in Resources */,
+				00F1276B1D75F33500276A84 /* Images-2.xcassets in Resources */,
 				476730E216108E1300B28D35 /* info.tiff in Resources */,
 				476730E316108E1300B28D35 /* language.tiff in Resources */,
 				476730E416108E1300B28D35 /* list.tiff in Resources */,
@@ -2271,7 +2276,6 @@
 				475C6D5A170C9214006535BB /* googlestorage.tiff in Resources */,
 				47B888A917984584004E298A /* Folder.xib in Resources */,
 				47CE3BFA1799309F0031DB9F /* transfer-copy.tiff in Resources */,
-				47F9380F1D7F63CE00108AB5 /* dropbox.tiff in Resources */,
 				47CE3BFB1799309F0031DB9F /* transfer-move.tiff in Resources */,
 				47CE3BFC1799309F0031DB9F /* transfer-sync.tiff in Resources */,
 			);
@@ -3793,6 +3797,7 @@
 		47D286C70855740C008142CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/JavaVM.framework/Versions/A/Frameworks",
@@ -3861,6 +3866,7 @@
 		47EFE4D21BECFE81009AC47B /* Mac App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/JavaVM.framework/Versions/A/Frameworks",

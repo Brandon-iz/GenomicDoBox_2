@@ -23,7 +23,6 @@ import ch.cyberduck.core.azure.AzureProtocol;
 import ch.cyberduck.core.b2.B2Protocol;
 import ch.cyberduck.core.dav.DAVProtocol;
 import ch.cyberduck.core.dav.DAVSSLProtocol;
-import ch.cyberduck.core.dropbox.DropboxProtocol;
 import ch.cyberduck.core.editor.DefaultEditorListener;
 import ch.cyberduck.core.editor.Editor;
 import ch.cyberduck.core.editor.EditorFactory;
@@ -124,9 +123,7 @@ public class Terminal {
                 new SpectraProtocol(),
                 new B2Protocol(),
                 new DriveProtocol(),
-                new HubicProtocol(),
-                new DriveProtocol(),
-                new DropboxProtocol()
+                new HubicProtocol()
         );
         this.options = options;
         if(log.isInfoEnabled()) {

@@ -147,7 +147,7 @@ public class OAuth2AuthorizationService {
             try {
                 // Swap the given authorization token for access/refresh tokens
                 final TokenResponse response = flow.newTokenRequest(bookmark.getCredentials().getPassword())
-                        .setRedirectUri(redirectUri).setScopes(scopes.isEmpty() ? null : scopes).execute();
+                        .setRedirectUri(redirectUri).execute();
                 tokens = new Credential.Builder(method)
                         .setTransport(transport)
                         .setClientAuthentication(new ClientParametersAuthentication(clientid, clientsecret))
@@ -217,9 +217,7 @@ public class OAuth2AuthorizationService {
                     String.format("%s OAuth2 Refresh Token", prefix), tokens.refreshtoken);
         }
         // Save expiry
-        if(tokens.expiry != null) {
-            preferences.setProperty(String.format("%s.oauth.expiry", host.getProtocol().getIdentifier()), tokens.expiry);
-        }
+        preferences.setProperty(String.format("%s.oauth.expiry", host.getProtocol().getIdentifier()), tokens.expiry);
     }
 
     private String getPrefix(final Host host) {
@@ -259,7 +257,7 @@ public class OAuth2AuthorizationService {
         }
 
         public boolean validate() {
-            return StringUtils.isNotEmpty(accesstoken);
+            return StringUtils.isNotEmpty(accesstoken) && StringUtils.isNotEmpty(refreshtoken);
         }
     }
 

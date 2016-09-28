@@ -27,14 +27,12 @@ import ch.cyberduck.core.exception.LocalAccessDeniedException;
 import ch.cyberduck.core.ftp.FTPProtocol;
 import ch.cyberduck.core.preferences.PreferencesFactory;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
 
 public abstract class ExpandriveBookmarkCollection extends ThirdpartyBookmarkCollection {
     private static final Logger log = Logger.getLogger(ExpandriveBookmarkCollection.class);
@@ -47,39 +45,29 @@ public abstract class ExpandriveBookmarkCollection extends ThirdpartyBookmarkCol
             while(reader.hasNext()) {
                 reader.beginObject();
                 final Host current = new Host(new FTPProtocol(), PreferencesFactory.get().getProperty("connection.hostname.default"));
-                boolean skip = false;
                 while(reader.hasNext()) {
                     final String name = reader.nextName();
                     switch(name) {
                         case "server":
-                            final String hostname = this.readNext(name, reader);
-                            if(StringUtils.isBlank(hostname)) {
-                                skip = true;
-                            }
-                            else {
-                                current.setHostname(hostname);
-                            }
+                            current.setHostname(reader.nextString());
                             break;
                         case "username":
-                            current.getCredentials().setUsername(this.readNext(name, reader));
+                            current.getCredentials().setUsername(reader.nextString());
                             break;
                         case "private_key_file":
-                            final String key = this.readNext(name, reader);
-                            if(StringUtils.isNotBlank(key)) {
-                                current.getCredentials().setIdentity(LocalFactory.get(key));
-                            }
+                            current.getCredentials().setIdentity(LocalFactory.get(reader.nextString()));
                             break;
                         case "remotePath":
-                            current.setDefaultPath(this.readNext(name, reader));
+                            current.setDefaultPath(reader.nextString());
                             break;
                         case "type":
-                            final Protocol type = ProtocolFactory.forName(this.readNext(name, reader));
+                            final Protocol type = ProtocolFactory.forName(reader.nextString());
                             if(null != type) {
                                 current.setProtocol(type);
                             }
                             break;
                         case "protocol":
-                            final Protocol protocol = ProtocolFactory.forName(this.readNext(name, reader));
+                            final Protocol protocol = ProtocolFactory.forName(reader.nextString());
                             if(null != protocol) {
                                 current.setProtocol(protocol);
                                 // Reset port to default
@@ -87,10 +75,10 @@ public abstract class ExpandriveBookmarkCollection extends ThirdpartyBookmarkCol
                             }
                             break;
                         case "name":
-                            current.setNickname(this.readNext(name, reader));
+                            current.setNickname(reader.nextString());
                             break;
                         case "region":
-                            current.setRegion(this.readNext(name, reader));
+                            current.setRegion(reader.nextString());
                             break;
                         default:
                             log.warn(String.format("Ignore property %s", name));
@@ -99,25 +87,12 @@ public abstract class ExpandriveBookmarkCollection extends ThirdpartyBookmarkCol
                     }
                 }
                 reader.endObject();
-                if(!skip) {
-                    this.add(current);
-                }
+                this.add(current);
             }
             reader.endArray();
         }
         catch(IllegalStateException | IOException e) {
             throw new LocalAccessDeniedException(e.getMessage(), e);
-        }
-    }
-
-    private String readNext(final String name, final JsonReader reader) throws IOException {
-        if(reader.peek() != JsonToken.NULL) {
-            return reader.nextString();
-        }
-        else {
-            reader.skipValue();
-            log.warn(String.format("No value for key %s", name));
-            return null;
         }
     }
 }
