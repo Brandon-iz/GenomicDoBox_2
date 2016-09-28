@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *	$Revision: 6757 $
+ *	$Date: 2010-08-25 13:25:44 +0200 (Mi, 25 Aug 2010) $
+ *
+ *  Copyright (c) 2005-2012 David Kocher. All rights reserved.
+ *  http://cyberduck.io/
+ *
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.package
+ *
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
+ *
+ *	Bug fixes, suggestions and comments should be sent to:
+ *	dkocher@cyberduck.io
+ -->
+<project name="Archiver" basedir=".">
+
+    <target name="tar" if="platform.mac">
+        <mkdir dir="${build.deploy}"/>
+        <exec dir="${directory}" executable="tar" spawn="false" failonerror="true">
+            <arg line="--exclude .svn --exclude .git --exclude target -czf ${build.deploy}/${target} ${source}"/>
+        </exec>
+        <echo message="Calculating MD5..."/>
+        <checksum file="${build.deploy}/${target}" algorithm="md5"/>
+    </target>
+
+    <target name="zip" if="platform.mac">
+        <mkdir dir="${build.deploy}"/>
+        <echo message="Creating ZIP archive from ${directory}/${source}"/>
+        <exec dir="${directory}" executable="ditto" spawn="false" failonerror="true">
+            <arg line="-c -k --keepParent --sequesterRsrc ${source} ${build.deploy}/${target}"/>
+        </exec>
+        <checksum file="${build.deploy}/${target}" algorithm="md5"/>
+    </target>
+
+    <target name="md5">
+        <echo message="Calculating MD5..."/>
+        <checksum file="${source}" algorithm="md5" property="source.md5"/>
+    </target>
+
+    <target name="sha1">
+        <echo message="Calculating SHA1..."/>
+        <checksum file="${source}" algorithm="sha1" property="source.sha1"/>
+    </target>
+
+    <target name="sha256">
+        <echo message="Calculating SHA256..."/>
+        <checksum file="${source}" algorithm="sha-256" property="source.sha256"/>
+    </target>
+</project>

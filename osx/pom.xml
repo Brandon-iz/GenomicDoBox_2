@@ -1,0 +1,309 @@
+<!--
+  ~ Copyright (c) 2002-2016 iterate GmbH. All rights reserved.
+  ~ https://cyberduck.io/
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ch.cyberduck</groupId>
+        <artifactId>parent</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>osx</artifactId>
+    <packaging>jar</packaging>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>Linux</family>
+                </os>
+            </activation>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>Mac</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-dependencies-jar-bundle</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/Cyberduck.app/Contents/Resources</outputDirectory>
+                                    <includeTypes>jar</includeTypes>
+                                    <includeScope>runtime</includeScope>
+                                    <stripClassifier>true</stripClassifier>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-dependencies-dylib-bundle</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/Cyberduck.app/Contents/Frameworks</outputDirectory>
+                                    <includeTypes>dylib</includeTypes>
+                                    <includeScope>runtime</includeScope>
+                                    <stripClassifier>true</stripClassifier>
+                                    <stripVersion>true</stripVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-artfifact-bundle</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>${project.artifactId}</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>${project.packaging}</type>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/Cyberduck.app/Contents/Resources</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>unpack-frameworks</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.sparkle-project</groupId>
+                                            <artifactId>sparkle</artifactId>
+                                            <type>zip</type>
+                                            <version>1.14.0</version>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>unpack-runtime</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.oracle.java</groupId>
+                                            <artifactId>jre</artifactId>
+                                            <type>zip</type>
+                                            <version>8u102</version>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>unpack-jce-unlimited</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.oracle.java</groupId>
+                                            <artifactId>local_policy</artifactId>
+                                            <type>jar</type>
+                                            <version>8</version>
+                                            <destFileName>local_policy.jar</destFileName>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>com.oracle.java</groupId>
+                                            <artifactId>US_export_policy</artifactId>
+                                            <type>jar</type>
+                                            <version>8</version>
+                                            <destFileName>US_export_policy.jar</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/Cyberduck.app/Contents/PlugIns/Runtime.jre/Contents/Home/lib/security
+                                    </outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>run-ant-target</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <property name="home" value="${main.basedir}" />
+                                        <property name="version" value="${project.version}" />
+                                        <property name="revision" value="${git.commitsCount}" />
+                                        <property name="git.revision" value="${git.revision}" />
+                                        <!-- 'Release' or 'Mac App Store' -->
+                                        <property name="xcode.configuration" value="${xcode.configuration}" />
+                                        <property name="sparkle.feed" value="${sparkle.feed}" />
+                                        <property name="sparkle.key.prefix" value="${sparkle.key.prefix}" />
+                                        <ant antfile="${project.basedir}/build.xml" target="build" dir="." />
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>ch.cyberduck</groupId>
+                    <artifactId>libcore</artifactId>
+                    <type>dylib</type>
+                    <scope>runtime</scope>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>sparkle</id>
+            <!-- activate profile for non-Jenkins builds -->
+            <activation>
+                <property>
+                    <name>!env.JENKINS_HOME</name>
+                </property>
+            </activation>
+            <properties>
+                <xcode.configuration>Release</xcode.configuration>
+                <sparkle.feed>/dev/null</sparkle.feed>
+                <sparkle.key.prefix>SU</sparkle.key.prefix>
+                <installer.certificate>3rd Party Mac Developer Installer: David Kocher (G69SCX94XU)</installer.certificate>
+                <codesign.certificate>Developer ID Application: David Kocher</codesign.certificate>
+                <codesign.arg>--entitlements ../setup/app/sandbox.entitlements</codesign.arg>
+            </properties>
+        </profile>
+        <profile>
+            <id>sign</id>
+            <activation>
+                <property>
+                    <name>env.JENKINS_HOME</name>
+                </property>
+                <os>
+                    <family>Mac</family>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>run-ant-package-target</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <property name="home" value="${main.basedir}" />
+                                        <property name="version" value="${project.version}" />
+                                        <property name="revision" value="${git.commitsCount}" />
+                                        <property name="git.revision" value="${git.revision}" />
+                                        <!-- 'Release' or 'Mac App Store' -->
+                                        <property name="xcode.configuration" value="${xcode.configuration}" />
+                                        <property name="sparkle.feed" value="${sparkle.feed}" />
+                                        <property name="sparkle.key.prefix" value="${sparkle.key.prefix}" />
+                                        <property name="codesign.certificate" value="${codesign.certificate}" />
+                                        <property name="codesign.arg" value="${codesign.arg}" />
+                                        <ant antfile="${project.basedir}/build.xml" target="package" dir="." />
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>libcore</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>test</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>binding</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>bonjour</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>protocols</artifactId>
+            <type>pom</type>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.cyberduck</groupId>
+            <artifactId>importer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

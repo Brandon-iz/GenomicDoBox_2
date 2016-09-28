@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>Cyberduck Changelog</title>
+        <link>https://cyberduck.io/changelog</link>
+        <description>Cyberduck Changelog.</description>
+        <language>en-us</language>
+        <copyright>${COPYRIGHT}</copyright>
+        <item>
+            <title>Cyberduck ${VERSION} (Revision ${REVISION})</title>
+            <pubDate>${TIMESTAMP}</pubDate>
+            <enclosure sparkle:version="${REVISION}"
+                       sparkle:shortVersionString="${VERSION}"
+                       sparkle:dsaSignature="${DSASIGNATURE}"
+                       url="${ARCHIVE}"
+                       type="application/octet-stream"/>
+            <sparkle:releaseNotesLink>${CHANGELOG}</sparkle:releaseNotesLink>
+            <sparkle:minimumSystemVersion>${MACOSX_DEPLOYMENT_TARGET}</sparkle:minimumSystemVersion>
+        </item>
+    </channel>
+</rss>

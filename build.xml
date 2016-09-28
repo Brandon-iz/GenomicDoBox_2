@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2002-2016 iterate GmbH. All rights reserved.
+  ~ https://cyberduck.io/
+  ~
+  ~ This program is free software; you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation; either version 2 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  -->
+<project name="Cyberduck" basedir=".">
+
+    <property file="build.properties"/>
+
+    <property environment="env"/>
+
+    <property name="debug" value="on"/>
+    <property name="module" location="."/>
+    <property name="build" value="${module}/target"/>
+    <property name="build.compile.target" value="${ant.java.version}"/>
+    <property name="configuration" value="release"/>
+    <property name="build.deploy" location="${build}/${configuration}"/>
+    <property name="build.bundles" value="${build.deploy}/bundles"/>
+    <property name="build.classes" value="${build}/classes"/>
+    <property name="build.unittests" value="${build}/test-classes"/>
+    <property name="build.unittests.include" value="**/*Test.class"/>
+    <property name="build.unittests.reports" value="${build}/report"/>
+    <property name="config" value="${home}/config"/>
+    <property name="img" value="${home}/img"/>
+    <property name="lib" value="${home}/lib"/>
+    <property name="lib.ext" value="${lib}/ext"/>
+    <property name="www" value="${home}/www"/>
+    <property name="www.update" value="${www}/update"/>
+    <property name="www.help" value="${www}/help"/>
+    <property name="setup" value="${home}/setup"/>
+    <property name="copyright" value="Copyright (c) 2001-2016 David Kocher. Copyright (c) 2011-2016 Yves Langisch"/>
+
+    <property name="bundle.contents" value="Contents"/>
+    <property name="bundle.home" value="${bundle.contents}/Home"/>
+    <property name="bundle.macos" value="${bundle.contents}/MacOS"/>
+    <property name="bundle.plugins" value="${bundle.contents}/PlugIns"/>
+    <property name="bundle.library" value="${bundle.contents}/Library"/>
+    <property name="bundle.login" value="${bundle.library}/LoginItems"/>
+    <property name="bundle.frameworks" value="${bundle.contents}/Frameworks"/>
+    <property name="bundle.resources" value="${bundle.contents}/Resources"/>
+    <property name="bundle.spotlight" value="${bundle.library}/Spotlight"/>
+    <property name="bundle.profiles" value="${bundle.resources}/Profiles"/>
+    <property name="bundle.bookmarks" value="${bundle.resources}/Bookmarks"/>
+
+    <condition property="platform.mac">
+        <os family="mac"/>
+    </condition>
+    <condition property="platform.windows">
+        <os family="windows"/>
+    </condition>
+    <condition property="platform.linux">
+        <and>
+            <not>
+                <!-- Exclude OS X-->
+                <isset property="platform.mac"/>
+            </not>
+            <os family="unix"/>
+        </and>
+    </condition>
+
+    <target name="init" depends="timestamp">
+        <echo message=""/>
+        <echo message="	  ---------------------------------------------------------------"/>
+        <echo message="   Java Version: ${ant.java.version}"/>
+        <echo message="	  Home:		    ${home}"/>
+        <echo message="	  Module:		${module}"/>
+        <echo message="	  Build Target:	${build}"/>
+        <echo message="	  ---------------------------------------------------------------"/>
+        <echo message=""/>
+        <echo message="Building ${ant.project.name} on ${os.name}/${os.arch} at ${touch.time}..."/>
+    </target>
+
+    <target name="version" depends="init">
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+            <classpath path="${lib.ext}/ant-contrib-1.0b3.jar"/>
+        </taskdef>
+        <propertyregex property="version"
+                       override="true"
+                       input="${version}"
+                       regexp="((\d+)\.(\d+)(\.(\d+))?)(-SNAPSHOT)?"
+                       select="\1"/>
+        <condition property="twoDigitsVersion">
+            <matches string="${version}" pattern="^(\d+)\.(\d+)$"/>
+        </condition>
+        <if>
+            <isset property="twoDigitsVersion"/>
+            <then>
+                <property name="normalized.version" value="${version}.0"/>
+            </then>
+            <else>
+                <property name="normalized.version" value="${version}"/>
+            </else>
+        </if>
+        <echo message="Version ${version}"/>
+        <echo message="Revision ${revision}"/>
+        <echo message="Hash ${git.revision}"/>
+    </target>
+
+    <target name="timestamp">
+        <tstamp>
+            <format property="touch.time"
+                    pattern="dd/MM/yyyy hh:mm aa"
+                    timezone="GMT+1"
+                    locale="en"/>
+        </tstamp>
+    </target>
+</project>
